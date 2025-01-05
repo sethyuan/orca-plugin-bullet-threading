@@ -1,0 +1,69 @@
+:root {
+  --orca-p-bt-border-scope: 2px solid var(--orca-color-primary-3);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --orca-p-bt-border-scope: 2px solid var(--orca-color-primary-7);
+  }
+}
+
+.orca-block-folding-handle {
+  background-color: var(--orca-color-bg-1);
+}
+
+.orca-block-handle {
+  background-color: var(--orca-color-bg-1);
+}
+
+.orca-block:not([data-indent="-1"])>.orca-repr:not(.orca-repr-journal):has(.orca-block.orca-active)::before {
+  content: "";
+  position: absolute;
+  position-anchor: var(--orca-block-scope);
+  top: calc((anchor(top) + anchor(bottom)) / 2);
+  left: calc(anchor(left) - 14px);
+  bottom: anchor(var(--orca-main-scope) bottom);
+  border-left: var(--orca-p-bt-border-scope);
+  border-top: 0;
+  border-bottom: 0;
+  width: 0;
+}
+
+.orca-repr:not(.orca-repr-journal):has(.orca-block.orca-active)>.orca-block:not(.orca-block.orca-active, :has(.orca-block.orca-active)) {
+  content-visibility: visible;
+}
+
+.orca-repr:not(.orca-repr-journal):has(.orca-block.orca-active)>.orca-block:not(.orca-block.orca-active, :has(.orca-block.orca-active))>.orca-repr::before {
+  content: "";
+  position: absolute;
+  position-anchor: var(--orca-block-scope);
+  top: 0;
+  left: calc(anchor(left) - 14px - var(--orca-spacing-indent));
+  bottom: 0;
+  border-left: var(--orca-p-bt-border-scope);
+}
+
+.orca-repr:not(.orca-repr-journal):has(.orca-block.orca-active) :is(.orca-block.orca-active > .orca-repr, .orca-repr:has(.orca-block.orca-active))::after {
+  content: "";
+  position: absolute;
+  position-anchor: var(--orca-block-scope);
+  top: 0;
+  bottom: calc((anchor(top) + anchor(bottom)) / 2 - 2px);
+  left: calc(anchor(left) - 14px - var(--orca-spacing-indent));
+  border-bottom-left-radius: 6px;
+  border-left: var(--orca-p-bt-border-scope);
+  border-bottom: var(--orca-p-bt-border-scope);
+  width: var(--orca-spacing-indent);
+}
+
+.orca-repr:not(.orca-repr-journal):has(.orca-block.orca-active)>:is(.orca-block.orca-active, .orca-block:has(.orca-block.orca-active))~.orca-block>.orca-repr::before {
+  border-color: transparent;
+}
+
+@scope (.orca-long-form) to (.orca-query-editor) {
+
+  & .orca-repr::before,
+  & .orca-repr::after {
+    border-color: transparent !important;
+  }
+}
